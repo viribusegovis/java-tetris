@@ -5,6 +5,7 @@
 package gui;
 
 import classes.Board;
+import java.awt.Font;
 
 /**
  *
@@ -61,6 +62,12 @@ public class Tetris extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+
+        jPanel4.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jPanel4ComponentResized(evt);
+            }
+        });
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel5.setLayout(new java.awt.GridLayout(1, 3));
@@ -196,9 +203,15 @@ public class Tetris extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4);
 
+        txtGame.setEditable(false);
         txtGame.setColumns(20);
         txtGame.setFont(new java.awt.Font("DejaVu Sans Mono", 1, 14)); // NOI18N
         txtGame.setRows(5);
+        txtGame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                txtGameComponentResized(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtGame);
 
         getContentPane().add(jScrollPane1);
@@ -246,6 +259,15 @@ public class Tetris extends javax.swing.JFrame {
         originalInstance.setVisible(true); // Make the original instance visible again
         dispose(); // Close the current window
     }//GEN-LAST:event_menuButton1ActionPerformed
+
+    private void jPanel4ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentResized
+    }//GEN-LAST:event_jPanel4ComponentResized
+    
+    private void txtGameComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_txtGameComponentResized
+        int width = txtGame.getWidth();
+            txtGame.setFont(new Font("DejaVu Sans Mono", Font.BOLD , width / 21));
+            txtGame.revalidate();
+    }//GEN-LAST:event_txtGameComponentResized
 
     /**
      * @param args the command line arguments
