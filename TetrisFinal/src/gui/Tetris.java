@@ -13,13 +13,21 @@ import classes.Board;
 public class Tetris extends javax.swing.JFrame {
 
     Board board;
+
+    private MainMenu originalInstance;
+
     /**
      * Creates new form Tetris
      */
     public Tetris() {
         initComponents();
-        board = new Board(20,10);
+    }
+
+    public Tetris(MainMenu originalInstance) {
+        initComponents();
+        board = new Board(20, 10);
         txtGame.setText(board.toString());
+        this.originalInstance = originalInstance;
     }
 
     /**
@@ -37,6 +45,7 @@ public class Tetris extends javax.swing.JFrame {
         btnDown = new javax.swing.JButton();
         btnRight = new javax.swing.JButton();
         btnRotate = new javax.swing.JButton();
+        menuButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnFall = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -80,6 +89,14 @@ public class Tetris extends javax.swing.JFrame {
         });
         jPanel2.add(btnRotate);
 
+        menuButton.setText("Back to Menu");
+        menuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(menuButton);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -106,7 +123,7 @@ public class Tetris extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -162,6 +179,11 @@ public class Tetris extends javax.swing.JFrame {
         txtGame.setText(board.toString());
     }//GEN-LAST:event_btnRotateActionPerformed
 
+    private void menuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButtonActionPerformed
+        originalInstance.setVisible(true); // Make the original instance visible again
+        dispose(); // Close the current window
+    }//GEN-LAST:event_menuButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,6 +229,7 @@ public class Tetris extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton menuButton;
     private javax.swing.JTextArea txtGame;
     // End of variables declaration//GEN-END:variables
 }
