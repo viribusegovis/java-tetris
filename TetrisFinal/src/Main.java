@@ -10,6 +10,7 @@ public class Main {
         testBlockMatrix();
         testPiece();
         testPieceX();
+        testBoard();
     }
 
     private static void testBlock(){

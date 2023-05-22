@@ -4,17 +4,22 @@
  */
 package gui;
 
+import classes.Board;
+
 /**
  *
  * @author viribusegovis
  */
 public class Tetris extends javax.swing.JFrame {
 
+    Board board;
     /**
      * Creates new form Tetris
      */
     public Tetris() {
         initComponents();
+        board = new Board(20,10);
+        txtGame.setText(board.toString());
     }
 
     /**
@@ -26,21 +31,136 @@ public class Tetris extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        btnLeft = new javax.swing.JButton();
+        btnDown = new javax.swing.JButton();
+        btnRight = new javax.swing.JButton();
+        btnRotate = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btnFall = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtGame = new javax.swing.JTextArea();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+
+        btnLeft.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLeft.setText("◄");
+        btnLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeftActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnLeft);
+
+        btnDown.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDown.setText("▼");
+        btnDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDownActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDown);
+
+        btnRight.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnRight.setText("►");
+        btnRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRightActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnRight);
+
+        btnRotate.setText("↻");
+        btnRotate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRotateActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnRotate);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
+
+        btnFall.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnFall.setText("▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼");
+        btnFall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFallActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnFall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFall))
+        );
+
+        getContentPane().add(jPanel1);
+
+        txtGame.setColumns(20);
+        txtGame.setFont(new java.awt.Font("DejaVu Sans Mono", 1, 14)); // NOI18N
+        txtGame.setRows(5);
+        jScrollPane1.setViewportView(txtGame);
+
+        getContentPane().add(jScrollPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
+        board.moveLeft();
+        txtGame.setText(board.toString());
+    }//GEN-LAST:event_btnLeftActionPerformed
+
+    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
+        board.moveDown();
+        txtGame.setText(board.toString());
+
+    }//GEN-LAST:event_btnDownActionPerformed
+
+    private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
+        board.moveRight();
+        txtGame.setText(board.toString());
+
+    }//GEN-LAST:event_btnRightActionPerformed
+
+    private void btnFallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFallActionPerformed
+        board.fallDown();
+        txtGame.setText(board.toString());
+    }//GEN-LAST:event_btnFallActionPerformed
+
+    private void btnRotateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRotateActionPerformed
+        board.rotate();
+        txtGame.setText(board.toString());
+    }//GEN-LAST:event_btnRotateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +198,15 @@ public class Tetris extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDown;
+    private javax.swing.JButton btnFall;
+    private javax.swing.JButton btnLeft;
+    private javax.swing.JButton btnRight;
+    private javax.swing.JButton btnRotate;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtGame;
     // End of variables declaration//GEN-END:variables
 }

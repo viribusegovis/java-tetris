@@ -4,7 +4,7 @@ public class Block {
 
     @Override
     public String toString() {
-        return ""+id;
+        return String.valueOf(id);
     }
 
     private char id;

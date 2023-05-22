@@ -2,7 +2,6 @@ package classes;
 
 import classes.pieces.*;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class Board extends BlockMatrix{
@@ -24,10 +23,11 @@ public class Board extends BlockMatrix{
         }
 
         // Generate a random piece
-        generateRandomPiece();
 
         // Set the matrix
         this.matrix = new BlockMatrix(emptyMatrix).getMatrix();
+        generateRandomPiece();
+
     }
 
 
@@ -57,21 +57,22 @@ public class Board extends BlockMatrix{
             case 5 -> current = new PieceT();
             case 6 -> current = new PieceZ();
         }
+        System.out.println("Game Lost: "+checkForLoss());
     }
 
-    public boolean canMovePiece(int dx, int dy) {
+    public boolean canMovePiece(int dy, int dx) {
         int newX = current.getX() + dx;
         int newY = current.getY() + dy;
 
-        // Check if the new position is within the boundaries of the board
+        // Check if position is within board boundaries
         if (newX < 0 || newX + current.getColumns() > getColumns() ||
                 newY < 0 || newY + current.getLines() > getLines()) {
-            return false; // Invalid position
+            return false; // Invalid
         }
 
         // Check for obstacles in the target cells
-        for (int y = 0; y < current.getLines(); y++) {
-            for (int x = 0; x < current.getColumns(); x++) {
+        for (int x = 0; x < current.getColumns(); ++x) {
+            for (int y = 0; y < current.getLines(); ++y) {
                 Block block = current.getMatrix()[y][x];
                 int targetX = newX + x;
                 int targetY = newY + y;
@@ -82,36 +83,147 @@ public class Board extends BlockMatrix{
             }
         }
 
-        return true; // Valid move
+        return true; // Valid
+    }
+
+    public boolean canRotatePiece(Piece rotatedPiece) {
+
+        // Get the current coordinates of the original piece
+        int originalX = this.current.getX();
+        int originalY = this.current.getY();
+
+        // Iterate through the rotated piece's matrix
+        for (int y = 0; y < rotatedPiece.getLines(); y++) {
+            for (int x = 0; x < rotatedPiece.getColumns(); x++) {
+                // Calculate coordinates in the board's matrix
+                int newX = originalX + x;
+                int newY = originalY + y;
+
+                // Check for collision with walls or other blocks
+                //TODO: Fix bug where the rotate kicks with the border but not with pieces
+                if (
+                        newX < 0
+                        || newX >= this.getColumns()
+                        || newY < 0
+                        || newY >= this.getLines()
+                        || this.matrix[newY][newX].equals(new Empty())) {
+                return false; // Invalid
+
+                }
+            }
+        }
+
+        return true; // Valid
+    }
+
+    public void rotate(){
+        Piece originalCurrent = current.getClone();
+        Piece rotatedCurrent = originalCurrent.getClone();
+        rotatedCurrent.rotate();
+
+        //Check if it can rotate without wall-kick
+        if(canRotatePiece(rotatedCurrent)){
+            this.current = rotatedCurrent;
+            return;
+        }
+        System.out.println("rotate, canMovePiece, Left : "+canMovePiece(0,-1));
+        //If not then check if it needs to wall-kick left
+        if (canMovePiece(0,-1)){
+
+            int deltaSpace = rotatedCurrent.getColumns() - originalCurrent.getColumns();
+            for (int x = 0; x < deltaSpace; x++) {
+                rotatedCurrent.moveLeft();
+            }
+            this.current = rotatedCurrent;
+            return;
+        }
+
+        //or right
+        if (canMovePiece(0,1)){
+            originalCurrent.moveRight();
+            if (canRotatePiece(rotatedCurrent)){
+                rotatedCurrent = originalCurrent.getClone();
+                rotatedCurrent.rotate();
+            }
+        }
+        //else it can't rotate
+        else
+            System.out.println("Cannot rotate");
     }
 
     public void freezePiece() {
-        // Get the position of the piece and update the corresponding blocks in the matrix
-        int pieceX = current.getX();
-        int pieceY = current.getY();
 
-        Block[][] pieceMatrix = current.getMatrix();
-        int pieceLines = pieceMatrix.length;
-        int pieceColumns = pieceMatrix[0].length;
+        //Iterates the blocks of the current piece
+        for (int y = 0; y < current.getLines(); y++) {
+            for (int x = 0; x < current.getColumns(); x++) {
+                //Checks if is Empty
+                if( current.getMatrix()[y][x] instanceof Empty)
+                    continue;
 
-        // Update the matrix with the blocks of the piece
-        for (int i = 0; i < pieceLines; i++) {
-            for (int j = 0; j < pieceColumns; j++) {
-                Block block = pieceMatrix[i][j];
-                if (!(block instanceof Empty)) {
-                    int boardX = pieceX + i;
-                    int boardY = pieceY + j;
-                    this.matrix[boardX][boardY] = block;
-                }
+                //colocar um clone da peca na matriz
+                matrix[y + current.getY()][x + current.getX()]
+                        = current.getMatrix()[y][x].getClone();
             }
         }
     }
 
+    public void moveLeft(){
+        if (canMovePiece(0,-1)){
+            current.moveLeft();
+        }
+    }
+
+    public void moveRight(){
+        if (canMovePiece(0,1)){
+            current.moveRight();
+        }
+    }
+
+    public void moveDown() {
+        if (canMovePiece(1, 0)) {
+            current.moveDown();
+        }else{
+            freezePiece();
+            generateRandomPiece();
+        }
+    }
+
+    public void fallDown() {
+        System.out.println("fallDown called");
+        while (canMovePiece(1 , 0 )){
+            current.moveDown();
+            System.out.println(canMovePiece(1 , current.getX() ));
+         }
+        freezePiece();
+        generateRandomPiece();
+    }
+
+    public boolean checkForLoss(){
+
+        // Check for obstacles in the target cells
+        for (int x = 0; x < current.getColumns(); ++x) {
+            for (int y = 0; y < current.getLines(); ++y) {
+                if (this.matrix[x][y].getId()!='.') {
+                    return true; // Continue
+                }
+            }
+        }
+
+        return false; // Lost
+    }
+
     @Override
     public String toString() {
-        return "Board{" +
-                "current=" + current +
-                ", matrix=" + Arrays.toString(matrix) +
-                '}';
+        Board b = new Board(this);
+        b.freezePiece();
+        StringBuilder str = new StringBuilder();
+
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix[y].length; x++) {
+                str.append(b.matrix[y][x].toString()).append(' ');
+            }
+            str.append("\n");
+        }
+        return str.toString();
     }
 }

@@ -53,6 +53,6 @@ public class Piece extends BlockMatrix {
     }
 
     public void moveDown(){
-        this.setY(this.getY()-1);
+        this.setY(this.getY()+1);
     }
 }
