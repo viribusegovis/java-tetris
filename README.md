@@ -1,6 +1,6 @@
 # Tetris Java POO
 
-A Java Swing implementation of Tetris built for the *Programação Orientada a Objetos* (POO) course at LEI (ISEC). The project demonstrates OOP fundamentals — inheritance, polymorphism, cloning, and encapsulation — applied to classic Tetris mechanics.
+A Java Swing implementation of Tetris built for the *Programação Orientada a Objetos* (POO) course at LEI (IPT). The project demonstrates OOP fundamentals — inheritance, polymorphism, cloning, and encapsulation — applied to classic Tetris mechanics.
 
 ## Overview
 
