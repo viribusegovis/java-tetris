@@ -1,6 +1,6 @@
 # Java Tetris
 
-A Java Swing implementation of Tetris built for the *Programação Orientada a Objetos* (POO) course at LEI (ISEC). The project demonstrates OOP fundamentals — inheritance, polymorphism, cloning, and encapsulation — applied to classic Tetris mechanics.
+A Java Swing implementation of Tetris built for the *Programação Orientada a Objetos* (POO) course at LEI (IPT). The project demonstrates OOP fundamentals - inheritance, polymorphism, cloning, and encapsulation - applied to classic Tetris mechanics.
 
 ## Overview
 
@@ -25,11 +25,11 @@ The repo contains two NetBeans/Ant projects:
 
 Core game model (`TetrisFinal/src/classes`):
 
-- **`Block`** — a single cell, identified by a `char` id (`.` for empty); supports copy-construction and cloning.
-- **`Empty`** — a `Block` subclass representing an empty cell.
-- **`BlockMatrix`** — a 2D grid of `Block`s with clone and in-place `rotate()` (matrix transpose + reverse) support.
-- **`Piece`** (`classes.pieces`) — extends `BlockMatrix`, adds an `(x, y)` board position and movement methods. Each tetromino (`PieceI`, `PieceJ`, `PieceL`, `PieceO`, `PieceS`, `PieceT`, `PieceZ`) is a `Piece` subclass that hardcodes its own shape.
-- **`Board`** — extends `BlockMatrix`, owns the currently falling `Piece`, and implements collision detection, movement validation, rotation with wall-kicks, freezing a piece into the board, and loss detection.
+- **`Block`** - a single cell, identified by a `char` id (`.` for empty); supports copy-construction and cloning.
+- **`Empty`** - a `Block` subclass representing an empty cell.
+- **`BlockMatrix`** - a 2D grid of `Block`s with clone and in-place `rotate()` (matrix transpose + reverse) support.
+- **`Piece`** (`classes.pieces`) - extends `BlockMatrix`, adds an `(x, y)` board position and movement methods. Each tetromino (`PieceI`, `PieceJ`, `PieceL`, `PieceO`, `PieceS`, `PieceT`, `PieceZ`) is a `Piece` subclass that hardcodes its own shape.
+- **`Board`** - extends `BlockMatrix`, owns the currently falling `Piece`, and implements collision detection, movement validation, rotation with wall-kicks, freezing a piece into the board, and loss detection.
 
 GUI (`TetrisFinal/src/gui`, NetBeans `.form`-backed): `MainMenu`, `Tetris` (game screen), `About`, `Rules`, `Options`.
 
