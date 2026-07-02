@@ -1,4 +1,4 @@
-# Tetris Java POO
+# Java Tetris
 
 A Java Swing implementation of Tetris built for the *Programação Orientada a Objetos* (POO) course at LEI (ISEC). The project demonstrates OOP fundamentals — inheritance, polymorphism, cloning, and encapsulation — applied to classic Tetris mechanics.
 
